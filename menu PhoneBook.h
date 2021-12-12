@@ -69,9 +69,10 @@ public:
         }
         std::cin.ignore(1,'\n');
         ContactDataBase::input_contact.close();
+        std::cout << "==============================" << std::endl;
     }
 
-    void editContactData(PhoneContact data){//masih salah
+    void editContactData(PhoneContact data){//MASIH SALAH
         string name, mobile_number, area_code, line, temp;
         std::ofstream tempFile;
         ContactDataBase::input_contact.open(ContactDataBase::file_name);
@@ -125,7 +126,7 @@ public:
         rename("Temp.txt", "Database.txt");
     }
 
-    void deleteContactData(PhoneContact data){
+    void deleteContactData(PhoneContact data){//database acak2 an
         string name, line, is_continue, temp;
         std::ofstream tempFile;
         ContactDataBase::input_contact.open(ContactDataBase::file_name);
@@ -142,7 +143,7 @@ public:
             temp = line;
 
             if(line == name){
-                std::getline(ContactDataBase::input_contact, line);
+                system("cls");
 
                 std::cout << "Delete " << line << "?[y/n]: ";
                 std::cin.ignore(1, '\n');
@@ -151,7 +152,7 @@ public:
                     std::getline(ContactDataBase::input_contact, line);
                     std::getline(ContactDataBase::input_contact, line);
                     std::getline(ContactDataBase::input_contact, line);
-                    std::cout << "Delete successfully" << std::endl;
+                    std::cout << "Delete successfully!" << std::endl;
                     goto label_next;
                 }
                 else if((is_continue == "N")|(is_continue == "n")){
@@ -185,7 +186,7 @@ public:
         std::cout << "+--------------------------------+" << std::endl;
         std::cout << "Name              : ";
         std::cin >> name;
-
+        system("cls");
         while(!ContactDataBase::input_contact.eof()){
             std::getline(ContactDataBase::input_contact, line);
             if((line == name)){
@@ -200,10 +201,11 @@ public:
             
         }
         std::cin.ignore(1,'\n');
-        ContactDataBase::input_contact.close(); 
+        ContactDataBase::input_contact.close();
+        std::cout << "==============================" << std::endl; 
     }
 
-    void searchDataByArea(PhoneContact data){
+    void searchDataByArea(PhoneContact data){//error ketika banyak yang dihapus
         string name;
         string area_code;
         string mobile_number;
