@@ -8,7 +8,7 @@ using std::string;
 
 int main(){
     char action;
-    string isContinue;
+    Menu option;
 
     do{
         system("cls");
@@ -28,22 +28,22 @@ int main(){
 
         switch (action){
             case '1':
-                addContact();
+                option.addContact();
                 break;
             case '2':
-                showContact();
+                option.showContact();
                 break;
             case '3':
-                searchContact();
+                option.searchContact();
                 break;
             case '4':
-                searchByArea();
+                option.searchByArea();
                 break;
             case '5':
-                editContact();
+                option.editContact();
                 break;
             case '6':
-                deleteContact();
+                option.deleteContact();
                 break;
             case '7':
                 continue;
