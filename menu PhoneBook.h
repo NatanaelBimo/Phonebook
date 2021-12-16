@@ -44,7 +44,7 @@ public:
         ContactDataBase::output_contact.open(ContactDataBase::file_name, std::ios_base::app);
         ContactDataBase::output_contact << data.get_name() << std::endl;
         ContactDataBase::output_contact << data.get_code() << std::endl;
-        ContactDataBase::output_contact << data.get_number() << std::endl << std::endl;
+        ContactDataBase::output_contact << data.get_number() << std::endl;
         ContactDataBase::output_contact.close();
     }
 
@@ -72,7 +72,7 @@ public:
         std::cout << "==============================" << std::endl;
     }
 
-    void editContactData(PhoneContact data){//MASIH SALAH
+    void editContactData(PhoneContact data){
         string name, mobile_number, area_code, line, temp;
         std::ofstream tempFile;
         ContactDataBase::input_contact.open(ContactDataBase::file_name);
@@ -91,18 +91,17 @@ public:
                 std::cout << "New Name          : ";
                 std::cin.ignore(1, '\n');
                 std::getline(std::cin, name);
+                line.replace(0, line.length(), name);
                 tempFile << line << std::endl;
-
                 std::getline(ContactDataBase::input_contact, line);
                 std::cout << "Area Code         : " << line << std::endl;
                 std::cout << "New Area Code     : ";
-                std::cin.ignore(1, '\n');
                 std::getline(std::cin, area_code);
                 if(name == "-"){
                     tempFile << line << std::endl;
                     goto update_number;
                 }
-                line.replace(0, line.length(), name);
+                line.replace(0, line.length(), area_code);
                 tempFile << line << std::endl;
 
                 update_number:
@@ -126,7 +125,7 @@ public:
         rename("Temp.txt", "Database.txt");
     }
 
-    void deleteContactData(PhoneContact data){//database acak2 an
+    void deleteContactData(PhoneContact data){
         string name, line, is_continue, temp;
         std::ofstream tempFile;
         ContactDataBase::input_contact.open(ContactDataBase::file_name);
@@ -205,9 +204,9 @@ public:
         std::cout << "==============================" << std::endl; 
     }
 
-    void searchDataByArea(PhoneContact data){//error ketika banyak yang dihapus
-        string name;
+    void searchDataByArea(PhoneContact data){
         string area_code;
+        string name;
         string mobile_number;
         string line;
         ContactDataBase::input_contact.open(ContactDataBase::file_name, std::ios::in);
@@ -236,89 +235,92 @@ public:
     }
 };
 
-void addContact(){
-    string name, mobile_number, area_code;
-    system("cls");
+class Menu{
+public:
+    void addContact(){
+        string name, mobile_number, area_code;
+        system("cls");
 
-    std::cout << "+--------------------------------+" << std::endl;
-    std::cout << "|           ADD CONTACT          |" << std::endl;
-    std::cout << "+--------------------------------+" << std::endl;
+        std::cout << "+--------------------------------+" << std::endl;
+        std::cout << "|           ADD CONTACT          |" << std::endl;
+        std::cout << "+--------------------------------+" << std::endl;
 
-    std::cout << "Name              : ";
-    std::cin.ignore(1, '\n');
-    std::getline(std::cin, name);
-    std::cout << "Area Code         : ";
-    std::getline(std::cin, area_code);
-    std::cout << "Mobile Number     : (+" << area_code << ") ";
-    std::getline(std::cin, mobile_number);
+        std::cout << "Name              : ";
+        std::cin.ignore(1, '\n');
+        std::getline(std::cin, name);
+        std::cout << "Area Code         : ";
+        std::getline(std::cin, area_code);
+        std::cout << "Mobile Number     : (+" << area_code << ") ";
+        std::getline(std::cin, mobile_number);
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.addContactData(contactdata);
-    std::cout << "Press any key to continue...";
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.addContactData(contactdata);
+        std::cout << "Press any key to continue...";
+        getch();
+    }
 
-void showContact(){
-    string name, mobile_number, area_code;
-    system("cls");
+    void showContact(){
+        string name, mobile_number, area_code;
+        system("cls");
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.showContactData(contactdata);
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.showContactData(contactdata);
+        getch();
+    }
 
-void showAllContact(){
-    string name, mobile_number, area_code;
-    system("cls");
+    void showAllContact(){
+        string name, mobile_number, area_code;
+        system("cls");
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.showContactData(contactdata);
-    
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.showContactData(contactdata);
+        
+    }
 
-void editContact(){
-    string name, mobile_number, area_code;
-    showAllContact();
+    void editContact(){
+        string name, mobile_number, area_code;
+        showAllContact();
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.editContactData(contactdata);
-    std::cout << "Press any key to continue...";
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.editContactData(contactdata);
+        std::cout << "Press any key to continue...";
+        getch();
+    }
 
-void deleteContact(){
-    string name, mobile_number, area_code;
-    showAllContact();
+    void deleteContact(){
+        string name, mobile_number, area_code;
+        showAllContact();
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.deleteContactData(contactdata);
-    std::cout << "Press any key to continue...";
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.deleteContactData(contactdata);
+        std::cout << "Press any key to continue...";
+        getch();
+    }
 
-void searchContact(){
-    string name, mobile_number, area_code;
-    system("cls");
+    void searchContact(){
+        string name, mobile_number, area_code;
+        system("cls");
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.searchContactData(contactdata);
-    std::cout << "Press any key to continue...";
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.searchContactData(contactdata);
+        std::cout << "Press any key to continue...";
+        getch();
+    }
 
-void searchByArea(){
-    string name, mobile_number, area_code;
-    system("cls");
+    void searchByArea(){
+        string name, mobile_number, area_code;
+        system("cls");
 
-    ContactDataBase database = ("Database.txt");
-    PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
-    database.searchDataByArea(contactdata);
-    std::cout << "Press any key to continue...";
-    getch();
-}
+        ContactDataBase database = ("Database.txt");
+        PhoneContact contactdata = PhoneContact(name, area_code, mobile_number);
+        database.searchDataByArea(contactdata);
+        std::cout << "Press any key to continue...";
+        getch();
+    }
+};
